@@ -26,6 +26,7 @@ option(JSRL_INSTALL "Generate install target" ON)
 add_library(jsrl
     src/jsrl.cpp
     src/jsrl.hpp
+    src/jsrl_format.hpp
     src/jsrl_general_number.cpp
     src/jsrl_general_number.hpp
     src/jsrl_impl_util.cpp
@@ -80,6 +81,7 @@ if(JSRL_INSTALL)
     # Install headers
     install(FILES
         src/jsrl.hpp
+        src/jsrl_format.hpp
         src/jsrl_general_number.hpp
         src/jsrl_impl_util.hpp
         src/jsrl_mod.hpp

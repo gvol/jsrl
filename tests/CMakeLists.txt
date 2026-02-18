@@ -43,3 +43,12 @@ add_jsrl_test(jsrl_general_number_test)
 add_jsrl_test(jsrl_mod_test)
 add_jsrl_test(jsrl_test)
 add_jsrl_test(jsrlpp_test)
+
+# Add format test only if C++20 or later is available
+if(CMAKE_CXX_STANDARD GREATER_EQUAL 20)
+    add_jsrl_test(jsrl_format_test)
+    set_target_properties(jsrl_format_test PROPERTIES
+        CXX_STANDARD 20
+        CXX_STANDARD_REQUIRED ON
+    )
+endif()

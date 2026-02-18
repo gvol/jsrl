@@ -64,6 +64,40 @@ int main() {
 }
 ```
 
+### C++20 std::format Support (Optional)
+
+If building with C++20 or later, JSRL provides `std::formatter` specializations for all JSON types:
+
+```cpp
+#include "jsrl_format.hpp"  // Include for std::format support
+#include <format>
+
+using namespace jsrl;
+
+int main() {
+    Json json = R"({"status": "ok", "count": 42})"_Json;
+
+    // Use std::format with Json objects
+    std::string msg = std::format("Response: {}", json);
+    // msg = "Response: {"status":"ok","count":42}"
+
+    // Works with all jsrl types
+    GeneralNumber num(123);
+    std::cout << std::format("Value: {}", num) << std::endl;
+
+    // Pretty-print with std::format
+    auto pretty = pretty_print(json);
+    std::cout << std::format("{}", pretty) << std::endl;
+
+    return 0;
+}
+```
+
+**Note:** To enable C++20 features, build with:
+```bash
+cmake -DCMAKE_CXX_STANDARD=20 ..
+```
+
 ## Building from Source
 
 ### Requirements
