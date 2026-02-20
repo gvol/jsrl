@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Adobe. All rights reserved.
+ * Copyright 2026 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -232,6 +232,25 @@ namespace {
         });
         auto pretty = pretty_print(json).indent("    ");
         verify_format_matches_ostream(pretty);
+    }
+
+    TEST(JsonPrettyPrintFormatTest, KeyOrdering) {
+        // Keys inserted in non-alphabetical order; jsrl sorts them lexicographically
+        Json json(Json::ObjectBody{
+            {"zebra", Json(1)},
+            {"apple", Json(2)},
+            {"mango", Json(3)}
+        });
+        auto pretty = pretty_print(json);
+        verify_format_matches_ostream(pretty);
+
+        // Keys must appear in alphabetical order: apple, mango, zebra
+        string formatted = std::format("{}", pretty);
+        auto apple_pos = formatted.find("\"apple\"");
+        auto mango_pos = formatted.find("\"mango\"");
+        auto zebra_pos = formatted.find("\"zebra\"");
+        EXPECT_LT(apple_pos, mango_pos);
+        EXPECT_LT(mango_pos, zebra_pos);
     }
 
     // Tests for jsrl::Json::Error formatting
